@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System.Models.Claim>
+
+<h2>Your Claims</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Submit a New Claim</h2>
+<form asp-action="SubmitClaim" method="post">
+    <div class="form-group">
+        <label for="HoursWorked">Hours Worked</label>
+        <input type="number" step="0.1" class="form-control" id="HoursWorked" name="HoursWorked" required />
+    </div>
+    <div class="form-group">
+        <label for="HourlyRate">Hourly Rate</label>
+        <input type="number" step="0.01" class="form-control" id="HourlyRate" name="HourlyRate" required />
+    </div>
+    <div class="form-group">
+        <label for="TotalAmount">Total Amount</label>
+        <input type="text" class="form-control" id="TotalAmount" name="TotalAmount" readonly />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Claim</button>
+</form>
+
+<script>
+    // Calculate total payment dynamically
+    document.getElementById("HourlyRate").addEventListener("input", calculateTotal);
+    document.getElementById("HoursWorked").addEventListener("input", calculateTotal);
+
+    function calculateTotal() {
+        const hours = parseFloat(document.getElementById("HoursWorked").value) || 0;
+        const rate = parseFloat(document.getElementById("HourlyRate").value) || 0;
+        document.getElementById("TotalAmount").value = (hours * rate).toFixed(2);
+    }
+</script>

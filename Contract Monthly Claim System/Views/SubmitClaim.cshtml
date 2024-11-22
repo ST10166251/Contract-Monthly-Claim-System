@@ -1,0 +1,26 @@
+﻿@model Contract_Monthly_Claim_System.Models.Claim
+
+<form asp-action="SubmitClaim" asp-controller="Lecturer" enctype="multipart/form-data" method="post">
+    <div>
+        <label for="hoursWorked">Hours Worked:</label>
+        <input type="number" id="hoursWorked" name="HoursWorked" required />
+    </div>
+    <div>
+        <label for="hourlyRate">Hourly Rate:</label>
+        <input type="number" id="hourlyRate" name="HourlyRate" required />
+    </div>
+    <div>
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="Notes"></textarea>
+    </div>
+    <div>
+        <label for="file">Upload Supporting Document:</label>
+        <input type="file" id="file" name="file" accept=".pdf,.docx,.xlsx" required />
+    </div>
+    <div>
+        <button type="submit">Submit Claim</button>
+    </div>
+</form>
+
+
+

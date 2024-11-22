@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System.Models.Claim>
+
+<h2>Pending Claims</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Lecturer ID</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Amount</th>
+            <th>Notes</th>
+            <th>Status</th>
+            <th>File</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr data-claim-id="@claim.ClaimID" data-status="@claim.Status">
+                <td>@claim.LecturerID</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.TotalAmount</td>
+                <td>@claim.Notes</td>
+                <td class="claim-status">@claim.Status</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(claim.FilePath))
+                    {
+                        <a href="@Url.Content(claim.FilePath)" target="_blank">View Document</a>
+                    }
+                    else
+                    {
+                        <span>No File Uploaded</span>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-action="ApproveClaim" asp-controller="Coordinator" style="display: inline;">
+                        <input type="hidden" name="id" value="@claim.ClaimID" />
+                        <button class="btn btn-success">Approve</button>
+                    </form>
+                    <form method="post" asp-action="RejectClaim" asp-controller="Coordinator" style="display: inline; margin-left: 5px;">
+                        <input type="hidden" name="id" value="@claim.ClaimID" />
+                        <button class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
